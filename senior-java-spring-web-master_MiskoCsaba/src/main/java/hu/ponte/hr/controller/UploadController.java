@@ -1,4 +1,4 @@
-package hu.ponte.hr.controller.upload;
+package hu.ponte.hr.controller;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,7 @@ public class UploadController
     @RequestMapping(value = "post", method = RequestMethod.POST)
     @ResponseBody
     public String handleFormUpload(@RequestParam("file") MultipartFile file) {
+
 
         return "ok";
     }

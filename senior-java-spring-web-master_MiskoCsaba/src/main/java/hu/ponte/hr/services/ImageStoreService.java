@@ -2,11 +2,11 @@ package hu.ponte.hr.services;
 
 import hu.ponte.hr.domain.ImageFile;
 import hu.ponte.hr.dto.commands.AddImageCommand;
+import hu.ponte.hr.repository.FileUploadRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 @Transactional
@@ -14,18 +14,17 @@ import java.util.logging.Logger;
 @AllArgsConstructor
 public class ImageStoreService {
 
-    private final FileUploadService fileUploadService;
+    private final CloudinaryService CLOUDINARY_SERVICE;
+    private final FileUploadRepository FILE_UPLOAD_REPOSITORY;
     private static final Logger LOGGER = Logger.getLogger(ImageStoreService.class.getName());
 
     public void storeImage(AddImageCommand addImageCommand) {
-        addImageCommand.getImageFiles()
-                .forEach(imageFile -> {
-                    try {
-                        ImageFile imageFileToUpload = fileUploadService.processFile(imageFile);
-                    } catch (IOException e) {
-                        LOGGER.severe("Error while processing image file: " + e.getMessage());
-                    }
-                });
+
+        if (addImageCommand.getImageFile() != null) {
+            ImageFile imageFile = CLOUDINARY_SERVICE.uploadImage(addImageCommand.getImageFile());
+            FILE_UPLOAD_REPOSITORY.save(imageFile);
+            LOGGER.info("File uploaded");
+        }
     }
 
 }
