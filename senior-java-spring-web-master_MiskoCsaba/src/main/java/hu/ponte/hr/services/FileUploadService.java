@@ -15,14 +15,13 @@ public abstract class FileUploadService {
 
     private final FileUploadRepository fileUploadRepository;
 
-    public ImageFile processFile(CommonsMultipartFile commonsMultipartFile, String category) throws IOException {
-        ImageFile imageFile = storeFile(commonsMultipartFile, category);
-        imageFile.setCategory(category);
+    public ImageFile processFile(CommonsMultipartFile commonsMultipartFile) throws IOException {
+        ImageFile imageFile = storeFile(commonsMultipartFile);
         Long id = fileUploadRepository.save(imageFile).getId();
         return findById(id);
     }
 
-    protected abstract ImageFile storeFile(CommonsMultipartFile commonsMultipartFile, String category) throws IOException;
+    protected abstract ImageFile storeFile(CommonsMultipartFile commonsMultipartFile) throws IOException;
     public ImageFile findById(Long id) {
         return fileUploadRepository
                 .findById(id)
