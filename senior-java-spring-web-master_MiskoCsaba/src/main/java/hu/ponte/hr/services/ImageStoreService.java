@@ -14,15 +14,15 @@ import java.util.logging.Logger;
 @AllArgsConstructor
 public class ImageStoreService {
 
-    private final CloudinaryService CLOUDINARY_SERVICE;
-    private final FileUploadRepository FILE_UPLOAD_REPOSITORY;
+    private final CloudinaryService cloudinaryService;
+    private final FileUploadRepository fileUploadRepository;
     private static final Logger LOGGER = Logger.getLogger(ImageStoreService.class.getName());
 
     public void storeImage(AddImageCommand addImageCommand) {
 
         if (addImageCommand.getImageFile() != null) {
-            ImageFile imageFile = CLOUDINARY_SERVICE.uploadImage(addImageCommand.getImageFile());
-            FILE_UPLOAD_REPOSITORY.save(imageFile);
+            ImageFile imageFile = cloudinaryService.uploadImage(addImageCommand.getImageFile());
+            fileUploadRepository.save(imageFile);
             LOGGER.info("File uploaded");
         }
     }
