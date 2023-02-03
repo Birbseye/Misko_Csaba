@@ -12,19 +12,18 @@ import java.util.Locale;
  * @author zoltan
  */
 @Configuration
-public class AppConfig
-{
-	@Bean
-	public LocaleResolver localeResolver() {
-		return new FixedLocaleResolver(Locale.ENGLISH);
-	}
+public class AppConfig {
+    @Bean
+    public LocaleResolver localeResolver() {
+        return new FixedLocaleResolver(Locale.ENGLISH);
+    }
 
-	@Bean(name = "multipartResolver")
-	public CommonsMultipartResolver multipartResolver() {
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(100000000);
-		return multipartResolver;
-	}
-
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(2097152);
+        multipartResolver.setMaxInMemorySize(1048576);
+        return multipartResolver;
+    }
 
 }
