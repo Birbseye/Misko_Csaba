@@ -1,12 +1,13 @@
 package hu.ponte.hr.services;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.ponte.hr.domain.ImageFile;
 import hu.ponte.hr.dto.outgoing.UploadResponse;
 import hu.ponte.hr.exception.CloudinaryUploadException;
-import lombok.AllArgsConstructor;
+import hu.ponte.hr.repository.FileUploadRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -17,30 +18,36 @@ import java.util.Map;
 
 @Service
 @Transactional
-@AllArgsConstructor
-public class CloudinaryService {
+public class CloudinaryFileUploadImp extends FileUploadService {
 
     private final Cloudinary cloudinary;
 
-    public ImageFile uploadImage(CommonsMultipartFile image) {
+    public CloudinaryFileUploadImp(FileUploadRepository fileUploadRepository, Cloudinary cloudinary) {
+        super(fileUploadRepository);
+        this.cloudinary = cloudinary;
+    }
+
+    @Override
+    protected ImageFile storeFile(CommonsMultipartFile commonsMultipartFile, String category) {
         Map params = ObjectUtils.asMap(
+                "folder", category,
                 "access_mode", "authenticated",
+//                "access_type", "token",
                 "overwrite", false,
                 "type", "authenticated",
                 "resource_type", "auto",
-                "use_filename", true
-        );
-
-        UploadResponse response;
-        File fileToUpload = new File(System.getProperty("java.io.tmpdir") + '/' + image.getOriginalFilename());
+                "use_filename", true,
+                "transformation", new Transformation<>().width(600).height(400).crop("fill"));
+        UploadResponse uploadResponse;
+        File fileToUpload = new File(System.getProperty("java.io.tmpdir") + '/' + commonsMultipartFile.getOriginalFilename());
         try {
-            image.transferTo(fileToUpload);
-            response = new ObjectMapper()
+            commonsMultipartFile.transferTo(fileToUpload);
+            uploadResponse = new ObjectMapper()
                     .convertValue(cloudinary.uploader().upload(fileToUpload, params), UploadResponse.class);
         } catch (IOException e) {
             throw new CloudinaryUploadException();
         }
 
-        return new ImageFile(response, image);
+        return new ImageFile(uploadResponse, commonsMultipartFile);
     }
 }

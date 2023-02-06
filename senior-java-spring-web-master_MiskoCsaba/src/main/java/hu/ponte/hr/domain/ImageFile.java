@@ -32,6 +32,9 @@ public class ImageFile {
     @JsonFormat(locale = "hu", shape = JsonFormat.Shape.STRING, pattern = "yyyy. MM. dd. HH:mm:ss (Z)")
     private ZonedDateTime uploadDateTime = ZonedDateTime.now();
 
+    @ManyToOne
+    private SignedImage signedImage;
+
     public ImageFile(UploadResponse uploadResponse, CommonsMultipartFile commonsMultipartFile) {
         this.filePath = uploadResponse.getSecureUrl();
         this.originalFileName = commonsMultipartFile.getFileItem().getName();

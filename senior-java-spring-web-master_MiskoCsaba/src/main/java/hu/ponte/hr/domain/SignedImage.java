@@ -4,10 +4,9 @@ import hu.ponte.hr.dto.commands.AddImageCommand;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,6 +24,9 @@ public class SignedImage {
     private String privateSign;
     private String publicSign;
     private String imagePath;
+
+    @OneToMany(mappedBy = "signedImage")
+    private List<ImageFile> imageFiles;
 
     public SignedImage(AddImageCommand addImageCommand) {
         this.digitalSign = addImageCommand.getDigitalSign();
