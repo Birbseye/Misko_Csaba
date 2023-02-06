@@ -18,10 +18,10 @@
 
         public mounted() {
             this.myDropzone = new Dropzone(this.$refs.dz as HTMLElement, {
-                uploadMultiple:false,
+                uploadMultiple:true,
                 clickable:true,
                 addRemoveLinks:true,
-                url: '/api/file/post',
+                url: '/api/file',
             });
 
             this.myDropzone.on("success", (file: Dropzone.DropzoneFile, response: Object | string) => {
