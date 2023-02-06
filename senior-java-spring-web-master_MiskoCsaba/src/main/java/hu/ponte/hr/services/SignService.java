@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class SignService {
     private static final String ALGORITHM = "SHA256withRSA";
 
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
-
     public List<String> encodeSignature(String signatureData) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, IOException, InvalidKeySpecException {
         List<String> signatures = new ArrayList<>();
 
-        this.privateKey = loadPrivateKey();
-        this.publicKey = loadPublicKey();
+        PrivateKey privateKey = loadPrivateKey();
+        PublicKey publicKey = loadPublicKey();
 
         Signature privateSignature = Signature.getInstance(ALGORITHM);
         privateSignature.initSign(privateKey);
