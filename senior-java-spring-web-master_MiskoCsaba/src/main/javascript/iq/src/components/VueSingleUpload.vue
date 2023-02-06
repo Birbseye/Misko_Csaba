@@ -1,8 +1,8 @@
 <template>
 
-    <form class="dropzone" ref="dz">
+    <form class="dropzone" ref="dz" @drop = "onDrop()">
         <div class="fallback">
-            <input name="file" type="file" multiple/>
+            <input name="file" type="file" />
         </div>
     </form>
 
@@ -16,19 +16,29 @@
     export default class VueSingleUpload extends Vue {
         private myDropzone: Dropzone | null = null;
 
-        public mounted() {
-            this.myDropzone = new Dropzone(this.$refs.dz as HTMLElement, {
-                uploadMultiple:true,
-                clickable:true,
-                addRemoveLinks:true,
-                acceptedFiles: 'image/*',
-                url: '/api/file',
-            });
+      public mounted() {
+        this.myDropzone = new Dropzone(this.$refs.dz as HTMLElement, {
+          uploadMultiple:false,
+          clickable:true,
+          addRemoveLinks:true,
+          maxFilesize: 2,
+          acceptedFiles: 'image/*',
+          url: '/api/file',
 
-            this.myDropzone.on("success", (file: Dropzone.DropzoneFile, response: Object | string) => {
-                this.$emit("finished", file);
-            })
-        }
+        });
+
+        this.myDropzone.on("success", (file: Dropzone.DropzoneFile, response: Object | string) => {
+          this.$emit("finished", file);
+          if (file.size > 2097152) {
+            alert("The image size is more than 2MB!")
+            if (this.myDropzone) {
+              this.myDropzone.removeFile(file);
+            }
+          }
+        })
+
+      }
+
 
         public destroyed() {
             if (this.myDropzone) {
@@ -40,7 +50,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style scoped lang="scss">
 
     //FIXME
     $light-border-gray: #dedede;

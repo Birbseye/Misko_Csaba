@@ -6,6 +6,8 @@
                            @finished="onUploadFinished()" >
         </vue-single-upload>
 
+        <Canvas></Canvas>
+
         <image-list class="mt-5" ref="imagelist"></image-list>
 
     </div>
@@ -16,11 +18,13 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import VueSingleUpload from '@/components/VueSingleUpload.vue';
     import ImageList from '@/components/ImageList.vue'; // @ is an alias to /src
+    import Canvas from '@/components/Canvas.vue';
 
     @Component({
         components: {
             VueSingleUpload,
             ImageList,
+            Canvas
         },
     })
     export default class Home extends Vue {
