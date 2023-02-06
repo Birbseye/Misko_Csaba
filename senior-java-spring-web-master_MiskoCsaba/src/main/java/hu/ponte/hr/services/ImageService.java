@@ -42,7 +42,7 @@ public class ImageService {
                 if (imageTypes.contains(imageFile.getContentType())) {
                     ImageFile file = fileUploadService.processFile(imageFile, "image");
                     fileUploadRepository.save(file);
-                    LOGGER.info("File uploaded");
+                    LOGGER.info("File uploaded.");
                     SignedImage signedImage = new SignedImage(addImageCommand);
                     List<String> encodedKeys = signService.encodeSignature(addImageCommand.getDigitalSign());
                     file.setSignedImage(signedImage);
