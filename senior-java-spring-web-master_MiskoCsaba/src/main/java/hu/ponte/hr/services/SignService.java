@@ -21,14 +21,11 @@ public class SignService {
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
-    @Autowired
-    public SignService() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public List<String> encodeSignature(String signatureData) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, IOException, InvalidKeySpecException {
+        List<String> signatures = new ArrayList<>();
+
         this.privateKey = loadPrivateKey();
         this.publicKey = loadPublicKey();
-    }
-
-    public List<String> encodeSignature(String signatureData) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        List<String> signatures = new ArrayList<>();
 
         Signature privateSignature = Signature.getInstance(ALGORITHM);
         privateSignature.initSign(privateKey);
@@ -50,7 +47,7 @@ public class SignService {
     }
 
     private PrivateKey loadPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        try (FileReader fileReader = new FileReader("config/keys/key.private")) {
+        try (FileReader fileReader = new FileReader("senior-java-spring-web-master_MiskoCsaba/src/main/resources/config/keys/key.private")) {
             StringBuilder privateKeyBuilder = new StringBuilder();
             int c;
             while ((c = fileReader.read()) != -1) {
@@ -71,7 +68,7 @@ public class SignService {
     }
 
     private PublicKey loadPublicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        try (FileReader fileReader = new FileReader("config/keys/key.pub")) {
+        try (FileReader fileReader = new FileReader("senior-java-spring-web-master_MiskoCsaba/src/main/resources/config/keys/key.pub")) {
             StringBuilder publicKeyBuilder = new StringBuilder();
             int c;
             while ((c = fileReader.read()) != -1) {

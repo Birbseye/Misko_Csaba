@@ -10,9 +10,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -28,7 +30,7 @@ public class ImageService {
     private final FileUploadRepository fileUploadRepository;
     private static final Logger LOGGER = Logger.getLogger(ImageService.class.getName());
 
-    public void storeImage(AddImageCommand addImageCommand) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public void storeImage(AddImageCommand addImageCommand) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException, IOException, InvalidKeySpecException {
 
         if (addImageCommand.getImageFile() != null) {
             ImageFile imageFile = cloudinaryService.uploadImage(addImageCommand.getImageFile());
