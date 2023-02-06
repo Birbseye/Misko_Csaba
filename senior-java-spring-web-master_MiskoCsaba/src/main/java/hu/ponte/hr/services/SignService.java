@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SignService {
+
     private static final String ALGORITHM = "SHA256withRSA";
 
     public List<String> encodeSignature(String signatureData) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, IOException, InvalidKeySpecException {

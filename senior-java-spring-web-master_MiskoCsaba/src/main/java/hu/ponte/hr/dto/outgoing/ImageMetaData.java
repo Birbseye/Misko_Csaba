@@ -7,7 +7,7 @@ import lombok.Data;
  * @author zoltan
  */
 @Data
-public class ImageMeta {
+public class ImageMetaData {
     private String id;
     private String name;
     private String mimeType;
@@ -15,7 +15,7 @@ public class ImageMeta {
     private String digitalSign;
     private String imageFilePath;
 
-    public ImageMeta(SignedImage signedImage) {
+    public ImageMetaData(SignedImage signedImage) {
         this.id = String.valueOf(signedImage.getId());
         this.name = signedImage.getName();
         this.mimeType = signedImage.getMimeType();

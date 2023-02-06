@@ -1,6 +1,6 @@
 package hu.ponte.hr.services;
 
-import hu.ponte.hr.dto.outgoing.ImageMeta;
+import hu.ponte.hr.dto.outgoing.ImageMetaData;
 import hu.ponte.hr.domain.ImageFile;
 import hu.ponte.hr.domain.SignedImage;
 import hu.ponte.hr.dto.commands.AddImageCommand;
@@ -45,13 +45,12 @@ public class ImageService {
             signedImage.setSize(imageFile.getFileSize());
             signedImage.setMimeType(imageFile.getMediaType());
 
-
             signedImageRepository.save(signedImage);
 
         }
     }
 
-    public List<ImageMeta> getImageMeta(){
-        return signedImageRepository.findAll().stream().map(ImageMeta::new).collect(Collectors.toList());
+    public List<ImageMetaData> getImageMeta(){
+        return signedImageRepository.findAll().stream().map(ImageMetaData::new).collect(Collectors.toList());
     }
 }
