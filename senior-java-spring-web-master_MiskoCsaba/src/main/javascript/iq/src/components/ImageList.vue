@@ -15,7 +15,8 @@
       <tbody>
       <tr v-for="image in images">
         <th scope="row">
-          <img :src="'/api/images/preview/' + image.id" :alt="image.name" height="50px">
+<!--          <img :src="'/api/images/preview/' + image.id" :alt="image.name" height="50px">-->
+          <img :src="image.imageFilePath" :alt="image.name" height="50px">
         </th>
         <td>{{image.id}}</td>
         <td>{{image.name}}</td>
@@ -39,6 +40,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 	  name: string;
 	  mimeType: string;
 	  size: number;
+    imageFilePath: string;
 	  digitalSign: string;
   }
 

@@ -1,7 +1,9 @@
 package hu.ponte.hr.controller;
 
 
-import hu.ponte.hr.services.ImageStoreService;
+import hu.ponte.hr.dto.outgoing.ImageMeta;
+import hu.ponte.hr.services.ImageService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +16,15 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("api/images")
+@AllArgsConstructor
 public class ImagesController {
 
-    @Autowired
-    private ImageStoreService imageStoreService;
+    private final ImageService imageService;
 
     @GetMapping("meta")
     public List<ImageMeta> listImages() {
-		return Collections.emptyList();
+
+        return imageService.getImageMeta();
     }
 
     @GetMapping("preview/{id}")

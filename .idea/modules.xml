@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Misko_Csaba_Task.iml" filepath="$PROJECT_DIR$/.idea/Misko_Csaba_Task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/senior-java-spring-web-master_MiskoCsaba/senior-java-spring-web.iml" filepath="$PROJECT_DIR$/senior-java-spring-web-master_MiskoCsaba/senior-java-spring-web.iml" />
     </modules>
   </component>
 </project>

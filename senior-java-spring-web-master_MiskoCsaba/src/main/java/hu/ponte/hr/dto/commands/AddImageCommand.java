@@ -9,6 +9,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 @NoArgsConstructor
 public class AddImageCommand {
 
+    private String digitalSign;
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     private CommonsMultipartFile imageFile;
 }
