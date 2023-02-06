@@ -21,6 +21,7 @@
                 uploadMultiple:true,
                 clickable:true,
                 addRemoveLinks:true,
+                acceptedFiles: 'image/*',
                 url: '/api/file',
             });
 
