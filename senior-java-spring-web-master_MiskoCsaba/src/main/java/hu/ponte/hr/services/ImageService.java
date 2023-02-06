@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ImageService {
 
-    private final CloudinaryService cloudinaryService;
     private final FileUploadService fileUploadService;
     private final SignService signService;
     private final SignedImageRepository signedImageRepository;
