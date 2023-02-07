@@ -23,6 +23,7 @@ public class UploadController {
 
     @PostMapping
     public ResponseEntity<HttpStatus> handleFormUpload(@ModelAttribute AddImageCommand addImageCommand) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException, IOException, InvalidKeySpecException {
+        System.out.println("STEPPED IN THE CONTROLLER -------------------");
         imageService.storeImage(addImageCommand);
 
         return new ResponseEntity<>(HttpStatus.OK);

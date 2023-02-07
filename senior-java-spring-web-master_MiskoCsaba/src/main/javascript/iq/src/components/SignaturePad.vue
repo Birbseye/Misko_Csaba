@@ -1,61 +1,49 @@
 <template >
 
-  <div id="app" >
+  <div id="signature-pad" >
     <h5>Sign your attached picture below</h5>
     <vueSignature ref="signature" :sigOption="option"></vueSignature>
-    <button @click="save">Save</button>
     <button @click="clear">Clear Sign</button>
     <button @click="undo">Undo</button>
   </div>
 
 </template>
 
-<script>
-import vueSignature from "vue-signature"
-export default {
-  name: "app",
-  components:{
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import vueSignature from 'vue-signature';
+
+@Component({
+  components: {
     vueSignature
-  },
-  data() {
-    return {
-      option:{
-        penColor:"Navy",
-        backgroundColor:"MintCream"
-      }
-    };
-  },
-  methods:{
-    save(){
-      let _this = this;
-      let png = _this.$refs.signature.save()
-      let jpeg = _this.$refs.signature.save('image/jpeg')
-      let svg = _this.$refs.signature.save('image/svg+xml');
-      console.log(png);
-      console.log(jpeg)
-      console.log(svg)
-    },
-    clear(){
-      let _this = this;
-      _this.$refs.signature.clear();
-    },
-    undo(){
-      let _this = this;
-      _this.$refs.signature.undo();
-    },
-    fromDataURL(url){
-      let _this = this;
-      _this.$refs.signature.fromDataURL("base64");
-    },
-    handleDisabled(){
-      let _this = this;
-      _this.disabled  = !_this.disabled
-    }
   }
-};
+})
+
+export default class SignaturePad extends Vue {
+  signature = '';
+  option = {
+    penColor: "Navy",
+    backgroundColor: "MintCream"
+  };
+
+  save() {
+    const signature = this.$refs.signature as any;
+    const canvas = signature.$el.querySelector('canvas');
+    this.signature = canvas.toDataURL();
+    return this.signature;
+  }
+
+  clear() {
+    (this.$refs.signature as any).clear();
+  }
+
+  undo() {
+    (this.$refs.signature as any).undo();
+  }
+}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
     h5 {
       margin: 15px;
@@ -71,6 +59,10 @@ export default {
     button{
       margin: 8px;
       border-radius: 5px;
+    }
+
+    button:hover{
+      background-color: #42b983;
     }
 
 </style>
