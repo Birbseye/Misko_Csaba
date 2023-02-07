@@ -1,7 +1,7 @@
 <template >
 
   <div id="app" >
-<!--    <vueSignature ref="signature" :sigOption="option" :w="'800px'" :h="'400px'" :disabled="disabled" :defaultUrl="dataUrl"></vueSignature>-->
+    <h5>Sign your attached picture below</h5>
     <vueSignature ref="signature" :sigOption="option"></vueSignature>
     <button @click="save">Save</button>
     <button @click="clear">Clear Sign</button>
@@ -12,18 +12,16 @@
 
 <script>
 import vueSignature from "vue-signature"
-// import Canvas from "@/components/Canvas.vue";
 export default {
   name: "app",
   components:{
-    // Canvas,
     vueSignature
   },
   data() {
     return {
       option:{
-        penColor:"rgb(0, 0, 0)",
-        backgroundColor:"antiquewhite"
+        penColor:"Navy",
+        backgroundColor:"MintCream"
       }
     };
   },
@@ -59,9 +57,12 @@ export default {
 
 <style lang="scss">
 
+    h5 {
+      margin: 15px;
+    }
+
     .canvas {
-      margin-top: 20px;
-      border: 2px solid black;
+      border: 2px solid rgb(178,178,178);
       border-radius: 5px;
       width: 60%;
       height: 40%;
@@ -69,6 +70,7 @@ export default {
 
     button{
       margin: 8px;
+      border-radius: 5px;
     }
 
 </style>
