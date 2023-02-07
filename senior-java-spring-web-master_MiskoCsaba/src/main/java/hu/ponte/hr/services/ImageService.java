@@ -34,6 +34,9 @@ public class ImageService {
 
     public void storeImage(AddImageCommand addImageCommand) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException, IOException, InvalidKeySpecException {
 
+        System.out.println("STEPPED IN THE STOREIMAGE -------------------");
+        System.out.println("This is the digital sign: " + addImageCommand.getDigitalSign());
+
         if (addImageCommand.getFiles() != null) {
             List<CommonsMultipartFile> imageFiles = addImageCommand.getFiles();
             List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg"));

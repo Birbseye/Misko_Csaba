@@ -54,6 +54,9 @@ export default class Home extends Vue {
       formData.append('file', file);
       formData.append('signature', signature);
 
+      console.log('This is the file dara size: ' + file?.size + ' and type: ' + file?.type)
+      console.log('This is the signature: ' + signature)
+
       // Make a POST request to the server to save the file and signature
       const response = await axios.post('http://localhost:8080/api/file', formData, {
         headers: {
