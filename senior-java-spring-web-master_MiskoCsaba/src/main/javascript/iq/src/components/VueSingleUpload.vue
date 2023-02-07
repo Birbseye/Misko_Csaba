@@ -1,6 +1,6 @@
 <template>
 
-    <form class="dropzone" ref="dz" @drop = "onDrop()">
+    <form class="dropzone" ref="dz">
         <div class="fallback">
             <input name="file" type="file" />
         </div>
