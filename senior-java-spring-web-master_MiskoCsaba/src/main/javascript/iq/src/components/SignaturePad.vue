@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import vueSignature from 'vue-signature';
+import vueSignature from "vue-signature";
 
 @Component({
   components: {
@@ -26,7 +26,7 @@ export default class SignaturePad extends Vue {
     backgroundColor: "MintCream"
   };
 
-  save() {
+  getSignature() {
     const signature = this.$refs.signature as any;
     const canvas = signature.$el.querySelector('canvas');
     this.signature = canvas.toDataURL();
@@ -43,7 +43,7 @@ export default class SignaturePad extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 
     h5 {
       margin: 15px;

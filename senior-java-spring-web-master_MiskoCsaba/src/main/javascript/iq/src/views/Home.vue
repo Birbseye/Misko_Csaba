@@ -2,7 +2,7 @@
   <div class="home">
     <vue-single-upload class="file-upload"
                        ref="singleUploadRef"
-                       @finished="onUploadFinished()">
+                       >
     </vue-single-upload>
 
     <signature-pad ref="signaturePadRef" ></signature-pad>
@@ -35,38 +35,28 @@ export default class Home extends Vue {
   @Prop() private msg!: string;
   @Prop() private showDetails!: boolean | undefined;
 
-  private async onUploadFinished() {
-    console.log("UploadFinished");
-    (this.$refs.imagelist as ImageList).refresh();
-  }
-
   async save(): Promise<void> {
-    console.log("stepped in home save method")
     try {
-      // Get the file from the Dropzone component
       const file = (this.$refs.singleUploadRef as VueSingleUpload).getFile();
 
-      // Get the signature string from the signature pad component
-      const signature = (this.$refs.signaturePadRef as SignaturePad).save();
+      const signature = (this.$refs.signaturePadRef as SignaturePad).getSignature();
 
-      // Build a form data object to send to the server
       const formData = new FormData();
       formData.append('file', file);
       formData.append('signature', signature);
 
-      console.log('This is the file dara size: ' + file?.size + ' and type: ' + file?.type)
-      console.log('This is the signature: ' + signature)
-
-      // Make a POST request to the server to save the file and signature
       const response = await axios.post('http://localhost:8080/api/file', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      // Check if the save was successful
       if (response.status === 200) {
+        alert("Image uploaded successfully!")
         console.log('File and signature saved successfully');
+        await (this.$refs.imagelist as ImageList).refresh();
+        (this.$refs.signaturePadRef as SignaturePad).clear();
+        (this.$refs.singleUploadRef as VueSingleUpload).removeFiles();
       } else {
         console.error(`Error saving file and signature. Status: ${response.status}`);
       }

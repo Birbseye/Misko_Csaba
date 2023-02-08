@@ -17,8 +17,6 @@ export default class VueSingleUpload extends Vue {
 
   private myDropzone: Dropzone | null = null;
 
-  // BASE_URL = "localhost:8080/api/file";
-
   public mounted() {
     this.myDropzone = new Dropzone(this.$refs.dz as HTMLElement, {
       uploadMultiple: false,
@@ -26,20 +24,23 @@ export default class VueSingleUpload extends Vue {
       addRemoveLinks: true,
       maxFilesize: 2,
       acceptedFiles: 'image/*',
-      url: 'api/file',
-
+      url: 'needed for drag and drop function',
+      autoProcessQueue: false
     });
 
     this.myDropzone.on("success", (file: Dropzone.DropzoneFile, response: Object | string) => {
       this.$emit("finished", file);
       if (file.size > 2097152) {
-        alert("The image size is more than 2MB!")
         if (this.myDropzone) {
           this.myDropzone.removeFile(file);
         }
       }
     })
 
+  }
+
+  public removeFiles() {
+    this.myDropzone?.removeAllFiles();
   }
 
   public getFile(): Dropzone.DropzoneFile | null {

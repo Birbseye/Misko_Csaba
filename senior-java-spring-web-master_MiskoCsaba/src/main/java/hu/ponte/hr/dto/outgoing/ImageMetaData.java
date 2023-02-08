@@ -20,7 +20,7 @@ public class ImageMetaData {
         this.name = signedImage.getName();
         this.mimeType = signedImage.getMimeType();
         this.size = signedImage.getSize();
-        this.digitalSign = signedImage.getPublicSign();
+        this.digitalSign = signedImage.getDigitalSign();
         this.imageFilePath = signedImage.getImagePath();
     }
 }

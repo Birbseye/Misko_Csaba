@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AddImageCommand {
 
-    private String digitalSign;
+    private String signature;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private List<CommonsMultipartFile> files;
+    private List<CommonsMultipartFile> file;
 }

@@ -17,6 +17,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -32,13 +34,9 @@ public class ImageService {
     private final FileUploadRepository fileUploadRepository;
     private static final Logger LOGGER = Logger.getLogger(ImageService.class.getName());
 
-    public void storeImage(AddImageCommand addImageCommand) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException, IOException, InvalidKeySpecException {
-
-        System.out.println("STEPPED IN THE STOREIMAGE -------------------");
-        System.out.println("This is the digital sign: " + addImageCommand.getDigitalSign());
-
-        if (addImageCommand.getFiles() != null) {
-            List<CommonsMultipartFile> imageFiles = addImageCommand.getFiles();
+    public void storeImage(AddImageCommand addImageCommand) throws Exception {
+        if (addImageCommand.getFile() != null && addImageCommand.getSignature() != null) {
+            List<CommonsMultipartFile> imageFiles = addImageCommand.getFile();
             List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg"));
             for (CommonsMultipartFile imageFile : imageFiles) {
                 if (imageTypes.contains(imageFile.getContentType())) {
@@ -46,20 +44,18 @@ public class ImageService {
                     fileUploadRepository.save(file);
                     LOGGER.info("File uploaded.");
                     SignedImage signedImage = new SignedImage(addImageCommand);
-                    List<String> encodedKeys = signService.encodeSignature(addImageCommand.getDigitalSign());
+                    signedImage.setDigitalSign(signService.sign(addImageCommand.getSignature()));
                     file.setSignedImage(signedImage);
-                    signedImage.setPrivateSign(encodedKeys.get(0));
-                    signedImage.setPublicSign(encodedKeys.get(1));
                     signedImage.setImagePath(file.getFilePath());
                     signedImage.setSize(file.getFileSize());
                     signedImage.setMimeType(file.getMediaType());
+                    signedImage.setName(file.getOriginalFileName());
                     signedImageRepository.save(signedImage);
                     LOGGER.info("SignedImage saved.");
                 }
             }
         }
     }
-
     public List<ImageMetaData> getImageMeta() {
         return signedImageRepository.findAll().stream().map(ImageMetaData::new).collect(Collectors.toList());
     }
