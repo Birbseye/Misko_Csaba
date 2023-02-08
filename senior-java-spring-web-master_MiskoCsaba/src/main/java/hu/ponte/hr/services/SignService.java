@@ -1,5 +1,6 @@
 package hu.ponte.hr.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,13 +17,16 @@ import java.util.Base64;
 @Transactional
 public class SignService {
 
+    private final VerifyService verifyService;
     private PrivateKey privateKey;
 
+    @Autowired
     public SignService() throws Exception {
         byte[] keyBytes = readPrivateKeyFile().getEncoded();
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory kf = KeyFactory.getInstance("RSA");
         privateKey = kf.generatePrivate(spec);
+        this.verifyService = new VerifyService();
     }
 
     public String sign(String input) throws Exception {
@@ -30,6 +34,11 @@ public class SignService {
         signature.initSign(privateKey);
         signature.update(input.getBytes());
         byte[] signatureBytes = signature.sign();
+
+        String encodedSignature = Base64.getEncoder().encodeToString(signatureBytes);
+        if (!verifyService.verify(input, encodedSignature)) {
+            throw new RuntimeException("Signature verification failed");
+        }
 
         return signShortener(Base64.getEncoder().encodeToString(signatureBytes));
     }
