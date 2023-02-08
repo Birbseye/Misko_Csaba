@@ -54,6 +54,7 @@ export default class SignaturePad extends Vue {
       border-radius: 5px;
       width: 60%;
       height: 40%;
+      cursor: crosshair;
     }
 
     button{
