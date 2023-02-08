@@ -29,7 +29,7 @@ public class SignService {
         this.verifyService = new VerifyService();
     }
 
-    public String sign(String input) throws Exception {
+    public String encodeSign(String input) throws Exception {
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initSign(privateKey);
         signature.update(input.getBytes());

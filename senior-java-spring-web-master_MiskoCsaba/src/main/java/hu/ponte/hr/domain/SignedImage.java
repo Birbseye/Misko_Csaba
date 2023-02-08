@@ -19,7 +19,10 @@ public class SignedImage {
     private String name;
     private String mimeType;
     private long size;
+
+    @Column(columnDefinition = "TEXT", length = 10000)
     private String digitalSign;
+
     private String imagePath;
 
     @OneToMany(mappedBy = "signedImage")

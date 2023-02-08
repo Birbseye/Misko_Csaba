@@ -11,14 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -44,7 +37,7 @@ public class ImageService {
                     fileUploadRepository.save(file);
                     LOGGER.info("File uploaded.");
                     SignedImage signedImage = new SignedImage(addImageCommand);
-                    signedImage.setDigitalSign(signService.sign(addImageCommand.getSignature()));
+                    signedImage.setDigitalSign(signService.encodeSign(addImageCommand.getSignature()));
                     file.setSignedImage(signedImage);
                     signedImage.setImagePath(file.getFilePath());
                     signedImage.setSize(file.getFileSize());
