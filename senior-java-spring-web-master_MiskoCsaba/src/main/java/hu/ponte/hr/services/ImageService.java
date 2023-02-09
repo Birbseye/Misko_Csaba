@@ -28,9 +28,10 @@ public class ImageService {
     private static final Logger LOGGER = Logger.getLogger(ImageService.class.getName());
 
     public void storeImage(AddImageCommand addImageCommand) throws Exception {
+
+        List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg"));
         if (addImageCommand.getFile() != null && addImageCommand.getSignature() != null) {
             List<CommonsMultipartFile> imageFiles = addImageCommand.getFile();
-            List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg"));
             for (CommonsMultipartFile imageFile : imageFiles) {
                 if (imageTypes.contains(imageFile.getContentType())) {
                     ImageFile file = fileUploadService.processFile(imageFile, "image");
@@ -45,6 +46,8 @@ public class ImageService {
                     signedImage.setName(file.getOriginalFileName());
                     signedImageRepository.save(signedImage);
                     LOGGER.info("SignedImage saved.");
+                } else {
+                    throw new RuntimeException("Illegal file type!");
                 }
             }
         }

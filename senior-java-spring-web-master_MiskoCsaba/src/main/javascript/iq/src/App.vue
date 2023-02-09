@@ -5,7 +5,8 @@
             |
             <router-link to="/about">About</router-link>
         </div>
-        <router-view/>
+      <notifications position="top center" group="notify" />
+      <router-view/>
     </div>
 </template>
 
@@ -13,7 +14,7 @@
     import 'dropzone/dist/min/dropzone.min.css';
     import {Component, Vue} from 'vue-property-decorator';
 
-    @Component
+        @Component
     export default class App extends Vue {
 
     }
@@ -40,4 +41,5 @@
             }
         }
     }
+
 </style>

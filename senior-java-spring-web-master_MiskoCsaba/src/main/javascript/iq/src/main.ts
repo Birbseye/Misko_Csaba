@@ -8,6 +8,7 @@ import ByteFilter from '@/filters/byte-filter';
 import PercentFilter from '@/filters/percent-filter';
 
 import * as Dropzone from 'dropzone';
+import Notification from 'vue-notification';
 
 const dz = Dropzone;
 dz.autoDiscover = false;
@@ -17,6 +18,7 @@ import en from '@/localizations/en';
 Vue.config.productionTip = false;
 
 Vue.use(VueI18n);
+Vue.use(Notification);
 const i18n = new VueI18n({
   locale: 'en',
   fallbackLocale: 'en',

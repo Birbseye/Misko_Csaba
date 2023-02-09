@@ -20,6 +20,7 @@ import ImageList from '@/components/ImageList.vue'; // @ is an alias to /src
 import SignaturePad from '@/components/SignaturePad.vue';
 import axios from "axios/index";
 
+
 @Component({
   components: {
     VueSingleUpload,
@@ -37,8 +38,8 @@ export default class Home extends Vue {
 
   async save(): Promise<void> {
     try {
-      const file = (this.$refs.singleUploadRef as VueSingleUpload).getFile();
 
+      const file = (this.$refs.singleUploadRef as VueSingleUpload).getFile();
       const signature = (this.$refs.signaturePadRef as SignaturePad).getSignature();
 
       const formData = new FormData();
@@ -52,8 +53,13 @@ export default class Home extends Vue {
       });
 
       if (response.status === 200) {
-        alert("Image uploaded successfully!")
-        console.log('File and signature saved successfully');
+        this.$notify({
+          group: 'notify',
+          type: 'success',
+          title: 'SUCCESS!✅',
+          text: 'The Image Successfully Uploaded!',
+          duration: 4000,
+        });
         await (this.$refs.imagelist as ImageList).refresh();
         (this.$refs.signaturePadRef as SignaturePad).clear();
         (this.$refs.singleUploadRef as VueSingleUpload).removeFiles();
