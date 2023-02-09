@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class ImageMetaData {
-    private String id;
+    private Long id;
     private String name;
     private String mimeType;
     private long size;
