@@ -19,7 +19,7 @@ import java.util.List;
  */
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class imageSignRepositoryTest {
+public class ImageSignRepositoryTest {
 
     @Autowired
     private SignedImageRepository signedImageRepository;

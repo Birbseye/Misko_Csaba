@@ -18,16 +18,22 @@ public class ImageFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "file_path")
     private String filePath;
+
     @Column(name = "original_file_name")
     private String originalFileName;
+
     @Column(name = "file_size")
     private Long fileSize;
+
     @Column(name = "media_type")
     private String mediaType;
+
     @Column(name = "category")
     private String category = "default";
+
     @Column(name = "upload_datetime")
     @JsonFormat(locale = "hu", shape = JsonFormat.Shape.STRING, pattern = "yyyy. MM. dd. HH:mm:ss (Z)")
     private ZonedDateTime uploadDateTime = ZonedDateTime.now();

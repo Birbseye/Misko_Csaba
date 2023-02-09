@@ -2,10 +2,10 @@
   <div class="home">
     <vue-single-upload class="file-upload"
                        ref="singleUploadRef"
-                       >
+    >
     </vue-single-upload>
 
-    <signature-pad ref="signaturePadRef" ></signature-pad>
+    <signature-pad ref="signaturePadRef"></signature-pad>
 
     <button type="submit" @click="save">Save Signed Image</button>
 
@@ -19,7 +19,6 @@ import VueSingleUpload from '@/components/VueSingleUpload.vue';
 import ImageList from '@/components/ImageList.vue'; // @ is an alias to /src
 import SignaturePad from '@/components/SignaturePad.vue';
 import axios from "axios/index";
-
 
 @Component({
   components: {
@@ -63,8 +62,6 @@ export default class Home extends Vue {
         await (this.$refs.imagelist as ImageList).refresh();
         (this.$refs.signaturePadRef as SignaturePad).clear();
         (this.$refs.singleUploadRef as VueSingleUpload).removeFiles();
-      } else {
-        console.error(`Error saving file and signature. Status: ${response.status}`);
       }
     } catch (error) {
       console.error(error);

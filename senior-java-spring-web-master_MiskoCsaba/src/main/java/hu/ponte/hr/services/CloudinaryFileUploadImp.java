@@ -32,7 +32,6 @@ public class CloudinaryFileUploadImp extends FileUploadService {
         Map params = ObjectUtils.asMap(
                 "folder", category,
                 "access_mode", "authenticated",
-//                "access_type", "token",
                 "overwrite", false,
                 "type", "authenticated",
                 "resource_type", "auto",

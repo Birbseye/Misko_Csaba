@@ -6,7 +6,6 @@ import hu.ponte.hr.dto.commands.AddImageCommand;
 import hu.ponte.hr.dto.outgoing.ImageMetaData;
 import hu.ponte.hr.repository.FileUploadRepository;
 import hu.ponte.hr.repository.SignedImageRepository;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +22,16 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ImageService {
 
-    private  FileUploadService fileUploadService;
-    private  SignService signService;
-    private  SignedImageRepository signedImageRepository;
-    private  FileUploadRepository fileUploadRepository;
+    private FileUploadService fileUploadService;
+    private SignatureService signatureService;
+    private SignedImageRepository signedImageRepository;
+    private FileUploadRepository fileUploadRepository;
     private static final Logger LOGGER = Logger.getLogger(ImageService.class.getName());
 
     @Autowired
-    public ImageService(FileUploadService fileUploadService, SignService signService, SignedImageRepository signedImageRepository, FileUploadRepository fileUploadRepository) {
+    public ImageService(FileUploadService fileUploadService, SignatureService signatureService, SignedImageRepository signedImageRepository, FileUploadRepository fileUploadRepository) {
         this.fileUploadService = fileUploadService;
-        this.signService = signService;
+        this.signatureService = signatureService;
         this.signedImageRepository = signedImageRepository;
         this.fileUploadRepository = fileUploadRepository;
     }
@@ -48,7 +47,7 @@ public class ImageService {
                     fileUploadRepository.save(file);
                     LOGGER.info("File uploaded.");
                     SignedImage signedImage = new SignedImage(addImageCommand);
-                    signedImage.setDigitalSign(signService.encodeSign(addImageCommand.getSignature()));
+                    signedImage.setDigitalSign(signatureService.encodeSign(addImageCommand.getSignature()));
                     file.setSignedImage(signedImage);
                     signedImage.setImagePath(file.getFilePath());
                     signedImage.setSize(file.getFileSize());
@@ -63,6 +62,7 @@ public class ImageService {
             }
         }
     }
+
     public List<ImageMetaData> getImageMeta() {
         return signedImageRepository.findAll().stream().map(ImageMetaData::new).collect(Collectors.toList());
     }

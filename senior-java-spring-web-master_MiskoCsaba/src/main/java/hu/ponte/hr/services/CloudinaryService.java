@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.ponte.hr.domain.ImageFile;
 import hu.ponte.hr.dto.outgoing.UploadResponse;
 import hu.ponte.hr.exception.CloudinaryUploadException;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -17,10 +16,13 @@ import java.util.Map;
 
 @Service
 @Transactional
-@AllArgsConstructor
 public class CloudinaryService {
 
     private final Cloudinary cloudinary;
+
+    public CloudinaryService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
     public ImageFile uploadImage(CommonsMultipartFile image) {
         Map params = ObjectUtils.asMap(

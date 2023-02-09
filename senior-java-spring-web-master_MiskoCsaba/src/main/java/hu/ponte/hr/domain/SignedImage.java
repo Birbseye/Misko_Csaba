@@ -14,13 +14,15 @@ public class SignedImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private String id;
 
     private String name;
+
     private String mimeType;
+
     private long size;
 
-    @Column(columnDefinition = "TEXT", length = 10000)
+    @Column(columnDefinition = "TEXT", length = 100000)
     private String digitalSign;
 
     private String imagePath;

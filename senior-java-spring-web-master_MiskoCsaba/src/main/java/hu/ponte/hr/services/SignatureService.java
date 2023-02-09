@@ -16,14 +16,14 @@ import java.util.logging.Logger;
 
 @Service
 @Transactional
-public class SignService {
+public class SignatureService {
 
-    private final VerifyService verifyService;
-    private static final Logger LOGGER = Logger.getLogger(SignService.class.getName());
+    private final SignatureVerifyService signatureVerifyService;
+    private static final Logger LOGGER = Logger.getLogger(SignatureService.class.getName());
 
     @Autowired
-    public SignService() {
-        this.verifyService = new VerifyService();
+    public SignatureService() {
+        this.signatureVerifyService = new SignatureVerifyService();
     }
 
     public String encodeSign(String input) throws Exception {
@@ -38,7 +38,7 @@ public class SignService {
         byte[] signatureBytes = signature.sign();
 
         String encodedSignature = Base64.getEncoder().encodeToString(signatureBytes);
-        if (!verifyService.verify(input, encodedSignature)) {
+        if (!signatureVerifyService.verify(input, encodedSignature)) {
             LOGGER.warning("Signature verification failed at these signature: " + input);
             throw new RuntimeException("Signature verification failed");
         }

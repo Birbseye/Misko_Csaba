@@ -16,7 +16,7 @@ public class ImageMetaData {
     private String imageFilePath;
 
     public ImageMetaData(SignedImage signedImage) {
-        this.id = String.valueOf(signedImage.getId());
+        this.id = signedImage.getId();
         this.name = signedImage.getName();
         this.mimeType = signedImage.getMimeType();
         this.size = signedImage.getSize();

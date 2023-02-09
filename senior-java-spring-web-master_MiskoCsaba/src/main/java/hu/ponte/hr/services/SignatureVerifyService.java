@@ -13,11 +13,11 @@ import java.util.Base64;
 
 @Service
 @Transactional
-public class VerifyService {
+public class SignatureVerifyService {
 
     public boolean verify(String input, String signature) throws Exception {
-        byte[] keyBytes = readPublicKeyFile();
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+        byte[] publicKeyBytes = readPublicKeyFile();
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory kf = KeyFactory.getInstance("RSA");
         PublicKey publicKey = kf.generatePublic(spec);
 
