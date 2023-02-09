@@ -29,7 +29,7 @@ public class ImageService {
 
     public void storeImage(AddImageCommand addImageCommand) throws Exception {
 
-        List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg"));
+        List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg", "image/webp"));
         if (addImageCommand.getFile() != null && addImageCommand.getSignature() != null) {
             List<CommonsMultipartFile> imageFiles = addImageCommand.getFile();
             for (CommonsMultipartFile imageFile : imageFiles) {
