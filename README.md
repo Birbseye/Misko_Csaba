@@ -1,2 +1,2 @@
-# Misko_Csaba
-Test task.
+# Notes
+DB schema: test_task
