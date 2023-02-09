@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class ImageMetaData {
-    private Long id;
+    private String id;
     private String name;
     private String mimeType;
     private long size;
@@ -16,7 +16,7 @@ public class ImageMetaData {
     private String imageFilePath;
 
     public ImageMetaData(SignedImage signedImage) {
-        this.id = signedImage.getId();
+        this.id = String.valueOf(signedImage.getId());
         this.name = signedImage.getName();
         this.mimeType = signedImage.getMimeType();
         this.size = signedImage.getSize();
