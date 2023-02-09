@@ -18,6 +18,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 import VueSingleUpload from '@/components/VueSingleUpload.vue';
 import ImageList from '@/components/ImageList.vue'; // @ is an alias to /src
 import SignaturePad from '@/components/SignaturePad.vue';
+import {FetchHttpService, HttpService} from '@/services/http-service';
 import axios from "axios/index";
 
 @Component({
@@ -31,9 +32,17 @@ export default class Home extends Vue {
 
   public fileName: string | null = null;
   public thumbnailUrl: string | null = null;
+  private httpService: HttpService
 
   @Prop() private msg!: string;
   @Prop() private showDetails!: boolean | undefined;
+
+
+  constructor() {
+    super();
+
+    this.httpService = new FetchHttpService();
+  }
 
   async save(): Promise<void> {
     try {

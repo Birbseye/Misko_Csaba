@@ -30,6 +30,7 @@ export default class SignaturePad extends Vue {
     const signature = this.$refs.signature as any;
     const canvas = signature.$el.querySelector('canvas');
     this.signature = canvas.toDataURL();
+
     return this.signature;
   }
 
