@@ -2,6 +2,7 @@ package hu.ponte.hr;
 
 import hu.ponte.hr.dto.outgoing.ImageMetaData;
 import hu.ponte.hr.services.ImageService;
+import hu.ponte.hr.services.SignService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,9 @@ public class imageServiceTest {
     ImageService imageService;
 
     @Test
-    public void testEmptyList(){
+    public void testEmptyList() throws Exception {
+        SignService signService = new SignService();
+        ImageService imageServiceTest = new ImageService();
 
         List<ImageMetaData> imageMetaDataList = imageService.getImageMeta();
 

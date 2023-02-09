@@ -7,6 +7,8 @@ import hu.ponte.hr.dto.outgoing.ImageMetaData;
 import hu.ponte.hr.repository.FileUploadRepository;
 import hu.ponte.hr.repository.SignedImageRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -18,14 +20,22 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
-@AllArgsConstructor
+@NoArgsConstructor
 public class ImageService {
 
-    private final FileUploadService fileUploadService;
-    private final SignService signService;
-    private final SignedImageRepository signedImageRepository;
-    private final FileUploadRepository fileUploadRepository;
+    private  FileUploadService fileUploadService;
+    private  SignService signService;
+    private  SignedImageRepository signedImageRepository;
+    private  FileUploadRepository fileUploadRepository;
     private static final Logger LOGGER = Logger.getLogger(ImageService.class.getName());
+
+    @Autowired
+    public ImageService(FileUploadService fileUploadService, SignService signService, SignedImageRepository signedImageRepository, FileUploadRepository fileUploadRepository) {
+        this.fileUploadService = fileUploadService;
+        this.signService = signService;
+        this.signedImageRepository = signedImageRepository;
+        this.fileUploadRepository = fileUploadRepository;
+    }
 
     public void storeImage(AddImageCommand addImageCommand) throws Exception {
 

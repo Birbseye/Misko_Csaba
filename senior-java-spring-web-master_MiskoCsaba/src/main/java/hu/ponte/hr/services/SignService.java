@@ -19,20 +19,19 @@ import java.util.logging.Logger;
 public class SignService {
 
     private final VerifyService verifyService;
-    private PrivateKey privateKey;
     private static final Logger LOGGER = Logger.getLogger(SignService.class.getName());
 
-
     @Autowired
-    public SignService() throws Exception {
-        byte[] keyBytes = readPrivateKeyFile().getEncoded();
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        privateKey = kf.generatePrivate(spec);
+    public SignService() {
         this.verifyService = new VerifyService();
     }
 
     public String encodeSign(String input) throws Exception {
+        byte[] keyBytes = readPrivateKeyFile().getEncoded();
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        PrivateKey privateKey = kf.generatePrivate(spec);
+
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initSign(privateKey);
         signature.update(input.getBytes());
