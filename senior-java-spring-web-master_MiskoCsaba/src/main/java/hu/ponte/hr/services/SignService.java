@@ -12,6 +12,7 @@ import java.security.PrivateKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import java.util.logging.Logger;
 
 @Service
 @Transactional
@@ -19,6 +20,8 @@ public class SignService {
 
     private final VerifyService verifyService;
     private PrivateKey privateKey;
+    private static final Logger LOGGER = Logger.getLogger(SignService.class.getName());
+
 
     @Autowired
     public SignService() throws Exception {
@@ -37,6 +40,7 @@ public class SignService {
 
         String encodedSignature = Base64.getEncoder().encodeToString(signatureBytes);
         if (!verifyService.verify(input, encodedSignature)) {
+            LOGGER.warning("Signature verification failed at these signature: " + input);
             throw new RuntimeException("Signature verification failed");
         }
 

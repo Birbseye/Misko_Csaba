@@ -47,6 +47,7 @@ public class ImageService {
                     signedImageRepository.save(signedImage);
                     LOGGER.info("SignedImage saved.");
                 } else {
+                    LOGGER.warning("There is an illegal file type in the input field: " + imageFile.getContentType());
                     throw new RuntimeException("Illegal file type!");
                 }
             }
