@@ -40,23 +40,23 @@ public class ImageService {
 
         List<String> imageTypes = new ArrayList<>(List.of("image/jpg", "image/png", "image/jpeg", "image/webp"));
         if (addImageCommand.getFile() != null && addImageCommand.getSignature() != null) {
-            List<CommonsMultipartFile> imageFiles = addImageCommand.getFile();
-            for (CommonsMultipartFile imageFile : imageFiles) {
-                if (imageTypes.contains(imageFile.getContentType())) {
-                    ImageFile file = fileUploadService.processFile(imageFile, "image");
-                    fileUploadRepository.save(file);
+            List<CommonsMultipartFile> incomingFiles = addImageCommand.getFile();
+            for (CommonsMultipartFile file : incomingFiles) {
+                if (imageTypes.contains(file.getContentType())) {
+                    ImageFile imageFile = fileUploadService.processFile(file, "image");
+                    fileUploadRepository.save(imageFile);
                     LOGGER.info("File uploaded.");
                     SignedImage signedImage = new SignedImage();
                     signedImage.setDigitalSign(signatureService.encodeSign(addImageCommand.getSignature()));
-                    file.setSignedImage(signedImage);
-                    signedImage.setImagePath(file.getFilePath());
-                    signedImage.setSize(file.getFileSize());
-                    signedImage.setMimeType(file.getMediaType());
-                    signedImage.setName(file.getOriginalFileName());
+                    imageFile.setSignedImage(signedImage);
+                    signedImage.setImagePath(imageFile.getFilePath());
+                    signedImage.setSize(imageFile.getFileSize());
+                    signedImage.setMimeType(imageFile.getMediaType());
+                    signedImage.setName(imageFile.getOriginalFileName());
                     signedImageRepository.save(signedImage);
                     LOGGER.info("SignedImage saved.");
                 } else {
-                    LOGGER.warning("There is an illegal file type in the input field: " + imageFile.getContentType());
+                    LOGGER.warning("There is an illegal file type in the input field: " + file.getContentType());
                     throw new RuntimeException("Illegal file type!");
                 }
             }
