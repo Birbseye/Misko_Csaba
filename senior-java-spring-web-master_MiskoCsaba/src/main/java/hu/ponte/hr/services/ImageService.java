@@ -46,7 +46,7 @@ public class ImageService {
                     ImageFile file = fileUploadService.processFile(imageFile, "image");
                     fileUploadRepository.save(file);
                     LOGGER.info("File uploaded.");
-                    SignedImage signedImage = new SignedImage(addImageCommand);
+                    SignedImage signedImage = new SignedImage();
                     signedImage.setDigitalSign(signatureService.encodeSign(addImageCommand.getSignature()));
                     file.setSignedImage(signedImage);
                     signedImage.setImagePath(file.getFilePath());

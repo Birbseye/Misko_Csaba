@@ -42,7 +42,7 @@ class FileUploadServiceTest {
         ImageFile testImageFile = new ImageFile();
         testImageFile.setFilePath(filePath);
         testImageFile.setOriginalFileName(fileName);
-        testImageFile.setCategory("products");
+        testImageFile.setCategory("image");
         testImageFile.setFileSize(fileSize);
         testImageFile.setMediaType(mediaType);
 

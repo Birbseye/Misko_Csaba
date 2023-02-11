@@ -1,6 +1,5 @@
 package hu.ponte.hr.domain;
 
-import hu.ponte.hr.dto.commands.AddImageCommand;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +29,4 @@ public class SignedImage {
     @OneToMany(mappedBy = "signedImage")
     private List<ImageFile> imageFiles;
 
-    public SignedImage(AddImageCommand addImageCommand) {
-        this.digitalSign = addImageCommand.getSignature();
-    }
 }

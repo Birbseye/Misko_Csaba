@@ -42,7 +42,7 @@ class CloudinaryFileUploadImpTest {
         ImageFile imageFile = new ImageFile();
         imageFile.setFilePath(filePath);
         imageFile.setOriginalFileName(fileName);
-        imageFile.setCategory("products");
+        imageFile.setCategory("image");
         imageFile.setFileSize(fileSize);
         imageFile.setMediaType(mediaType);
 
